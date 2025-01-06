@@ -1,0 +1,87 @@
+GIGA GAINS 
+
+Your personal AI-driven fitness coach, optimized for progress and balance
+
+______________________________________________________________________________________________
+
+Table of Contents
+
+1. Introduction
+
+2. Features
+
+3. Getting Started
+
+4. Installation
+
+5. Usage
+
+6. Technologies Used
+
+7. Contact
+
+______________________________________________________________________________________________
+
+INTRODUCTION
+
+GIGA GAINS is a cutting edge fitness application designed to track your workouts, visualzie your progress, and provide AI-driven recommendations for optimal fitness. Wether you're focusing on strength, endurance, or overall balance, the app adapts to your goals and ensures no muscle group is left behind.
+
+Key benefits include:
+- Simplified workout tracking with a clean calendar interface
+- Personalized AI recommendations tailored to your goals
+- Comprehensive visualization of your muscle group activity
+
+______________________________________________________________________________________________
+
+FEATURES
+
+- 📅 Workout Calendar: View and organize your workouts in a calendar format
+- 🧠 AI-Driven Recommendations: Suggest workouts based on your preferences, muscle group activity, and goals
+    (e.g. endurance, strength, balance)
+- 💪 Muscle Group Visualization: Heatmap-style indicators to show undersused or oversued msucle groups
+- 📝 Customizable Workout Plans: Set, track and modify workout routines with ease
+- ❌ Remove/ Filter Exercises: Exclude unwanted workouts from recommendations and re-add them later
+- 🗺️ Run tracking: Built-in map to log and analyze your running activities.
+
+______________________________________________________________________________________________
+
+GETTING STARTED
+
+Prerequisites:
+
+Before using the app, ensure, you have:
+- A device with iOS
+- Internet connection (for AI recommendations and syncing data)
+
+______________________________________________________________________________________________
+
+INSTALLATION
+
+______________________________________________________________________________________________
+
+USAGE
+
+1. Sign Up/ Log In: Craete an account to start tracking your workouts
+2. Set Goals: Define your initial fintenss goals (e.g. build muslce, imporve endurance)
+3. Track Workouts: Log your daily activities in the calendar.
+4. AI Recommendations: Receive personalized workout suggestions based on your progress
+5. Review Performance: USe the heatmap visualization to adjust and refine your routine
+
+______________________________________________________________________________________________
+
+TECHNOLOGIES USED
+
+- Frontend:
+- Backend:
+- Database:
+- AI engine:
+- Mapping:
+- Authentication: OAuth/JWT (for secure user login)
+
+______________________________________________________________________________________________
+
+CONTACT
+
+For questions, please contact
+
+-Elmer C: elmercruzgalvan2019@gmail.com
