@@ -9,13 +9,34 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            Color("Background1")   // Background color
+                .ignoresSafeArea()
+            
+            VStack (spacing: 150){
+                Image("GIGA GAINS")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 50)
+                
+                Image("Track Your Workouts, Optimize Progress, Achieve Your Fitness Goals With AI")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 90)
+            
+                Button(action: {
+                    print("Hello")
+                }) {
+                    Image("Button (Get Started)")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 100)
+//                        .clipShape(RoundedRectangle(cornerRadius: 10))
+//                        .shadow(radius: 5)
+                }
+            }
+            .padding()
         }
-        .padding()
     }
 }
 
