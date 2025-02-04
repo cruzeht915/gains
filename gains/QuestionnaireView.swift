@@ -49,7 +49,9 @@ struct QuestionnaireView: View {
     ]
     
     // Track the current question index
-    @State private var currentQuestionIndex: Int = 13
+    @State private var currentQuestionIndex: Int = 0
+    
+    @State private var finished: Bool = false
     
     // We'll store user answers in these states:
     // - singleChoiceAnswers: [UUID: String]  (one selected answer per question ID)
@@ -123,8 +125,10 @@ struct QuestionnaireView: View {
                             currentQuestionIndex += 1
                         } else {
                             // Or handle finishing the questionnaire
-                            print("Finished all questions!")
+                            finished = true
                         }
+                    }.navigationDestination(isPresented: $finished) {
+                        MonthCalendarView()
                     }
                     .padding()
                     .foregroundColor(.white)
@@ -190,7 +194,7 @@ struct QuestionnaireView: View {
             .cornerRadius(8)
         }
     }
-    
+    // Input Choice: A user can input string answers
     @ViewBuilder
     private func textInputView(_ question: Question) -> some View {
         VStack(alignment: .leading, spacing: 10){

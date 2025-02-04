@@ -41,7 +41,7 @@ struct AuthView: View{
                             
                         }
                         .navigationDestination(isPresented: $sucessfulLogin) {
-                            HomeView()
+                            MonthCalendarView()
                         }
                         
                         Button (action: {
