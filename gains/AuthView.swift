@@ -21,7 +21,7 @@ struct AuthView: View{
                 .ignoresSafeArea()
             
             VStack(spacing: 50){
-                Image("Sign Up or Log In")
+                Image("SIGN UP OR LOG IN")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 40)
@@ -41,7 +41,7 @@ struct AuthView: View{
                             
                         }
                         .navigationDestination(isPresented: $sucessfulLogin) {
-                            QuestionnaireView()
+                            HomeView()
                         }
                         
                         Button (action: {
@@ -53,7 +53,7 @@ struct AuthView: View{
                                 .scaledToFit()
                                 .frame(height: 60)
                         }.navigationDestination(isPresented: $sucessfulSignUp) {
-                            HomeView()
+                            QuestionnaireView()
                         }
                         
                     }
