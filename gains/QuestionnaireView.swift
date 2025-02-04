@@ -34,7 +34,7 @@ struct QuestionnaireView: View {
         Question(text: "9) How would you describe your strength in key lifts (Optional)", type: .textInput, answerChoices: ["Bench Press (Enter weight in lbs/kg):", "Squat (Enter weight in lbs/kg):", "Deadlift (Enter weight in lbs/kg):"]),
         Question(text: "10) Do you have any muscle inbalances or weaknesses you want to correct", type: .multipleChoice, answerChoices: ["Weak upper body (e.g., chest, arms, shoulders)", "Weak lower body (e.g., legs, glutes)", "Core strength (abs, lower back)", "No specific weaknesses"]),
         Question(text: "11) Where will you be working out", type: .singleChoice, answerChoices: ["Commercial Gym (Access to full equipment)", "Home Gym (Limited equipment)", "Outdoor Workouts (e.g., parks, running trails)", "No Equipment (Bodyweight only)"]),
-        Question(text: "12) What equipment do you have access to", type: .multipleChoice, answerChoices: ["Barbells & Plates", "Dumbbells", "Kettlebells", "Resistance Bands", "Machines (Leg press, Lat Pulldown, etc.)", "Pull-Up Bar", "Cardio Machines (Treadmill, Bike, Rowing)"]),
+        Question(text: "12) What equipment do you have access to", type: .multipleChoice, answerChoices: ["Barbells & Plates", "Dumbbells", "Kettlebells", "Resistance Bands", "Machines (Leg press, Lat Pulldown, etc.)", "Pull-Up Bar", "Cardio Machines (Treadmill, Bike, etc.)"]),
         Question(text: "13) Would you like body weight only workout options", type: .singleChoice, answerChoices: ["Yes (Only bodyweight exercises)", "No (Include equipment-based workouts)"]),
         Question(text: "14) Are there any muscle groups you want to focus on", type: .multipleChoice, answerChoices: ["Chest", "Back", "Shoulders", "Arms (Biceps/Triceps)", "Core (Abs, Obliques, Lower Back)", "Legs (Quads, Hamstrings, Glutes, Calves)", "Full-Body Workouts"]),
         Question(text: "15) Are there any muscle groups you want to avoid or deemphasize", type: .multipleChoice, answerChoices: ["Chest", "Back", "Shoulders", "Arms", "Core", "Legs", "None (Train everything equally)"]),
@@ -49,7 +49,7 @@ struct QuestionnaireView: View {
     ]
     
     // Track the current question index
-    @State private var currentQuestionIndex: Int = 0
+    @State private var currentQuestionIndex: Int = 13
     
     // We'll store user answers in these states:
     // - singleChoiceAnswers: [UUID: String]  (one selected answer per question ID)
@@ -65,37 +65,40 @@ struct QuestionnaireView: View {
             Color("Background1")
                 .ignoresSafeArea()
             
-            VStack(spacing: 40) {
+            VStack(spacing: 30) {
                 Image("SET YOUR FITNESS GOALS")
                     .padding(.top, 40)
                 
-                Text("Question \(currentQuestionIndex+1) of 23")
-                    .font(.headline)
-                    .foregroundColor(.gray)
-                            
-                // Built-in ProgressView
-                ProgressView(value: Double(currentQuestionIndex+1),
-                             total: Double(questions.count))
+                VStack {
+                    Text("Question \(currentQuestionIndex+1) of 23")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                    
+                    // Built-in ProgressView
+                    ProgressView(value: Double(currentQuestionIndex+1),
+                                 total: Double(questions.count))
                     .progressViewStyle(LinearProgressViewStyle(tint: .orange))
                     .padding(.horizontal)
-                
-                VStack{
+                    
                     let question = questions[currentQuestionIndex]
                     VStack (alignment: .leading, spacing: 20){
                         Text(question.text)
                             .font(.headline)
                             .foregroundColor(.white)
-                        switch question.type {
-                        case .singleChoice:
-                            singleChoiceView(question)
-                        case .multipleChoice:
-                            multipleChoiceView(question)
-                        case .textInput:
-                            textInputView(question)
+                            .padding(.vertical, 13)
+                        VStack {
+                            switch question.type {
+                            case .singleChoice:
+                                singleChoiceView(question)
+                            case .multipleChoice:
+                                multipleChoiceView(question)
+                            case .textInput:
+                                textInputView(question)
+                            }
                         }
-                    }.padding()
-                    
+                    }.padding(20)
                 }
+     
            
                 
                 // "Next" button
@@ -142,10 +145,14 @@ struct QuestionnaireView: View {
             }) {
                 HStack(alignment: .center, spacing: 10) {
                     Image(systemName: choice == selectedAnswer ? "inset.filled.circle" : "circle")
-                                                .foregroundColor(.white)
+                                                .foregroundColor(.orange)
                                                 .font(.title2)
+                    Spacer()
                     Text(choice)
                         .foregroundColor(.white)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                    Spacer()
                 }
                 .padding(10)
             }
@@ -166,11 +173,14 @@ struct QuestionnaireView: View {
             }) {
                 HStack(alignment: .center, spacing: 10) {
                     Image(systemName: selectedSet.contains(choice) ? "checkmark.square.fill" : "square")
-                                                .foregroundColor(.white)
+                                                .foregroundColor(.orange)
                                                 .font(.title2)
-                    
+                    Spacer()
                     Text(choice)
                         .foregroundColor(.white)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                    Spacer()
                 }
                 .padding(10)
             }
@@ -183,22 +193,27 @@ struct QuestionnaireView: View {
     
     @ViewBuilder
     private func textInputView(_ question: Question) -> some View {
-        ForEach(question.answerChoices, id:\.self) { toInput in
-            Text("\(toInput)")
-                .font(.headline)
-                .foregroundColor(.yellow)
-                .font(.system(size: 16, weight: .bold))
-            let binding = Binding<String>(
-                get: {textAnswers[toInput] ?? ""},
-                set: {textAnswers[toInput] = $0}
-            )
-            ZStack {
-                Rectangle()
-                    .fill(Color.white)
-                    .frame(width: 200, height: 50)
-                TextField("", text: binding)
-                    .padding()
-                    .frame(width: 190, height: 50)
+        VStack(alignment: .leading, spacing: 10){
+            ForEach(question.answerChoices, id:\.self) { toInput in
+                Text("\(toInput)")
+                    .font(.headline)
+                    .foregroundColor(.yellow)
+                    .font(.system(size: 16, weight: .bold))
+                let binding = Binding<String>(
+                    get: {textAnswers[toInput] ?? ""},
+                    set: {textAnswers[toInput] = $0}
+                )
+                ZStack {
+                    Rectangle()
+                        .fill(Color.white)
+                        .frame(width: 200, height: 50)
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(width: 200, height: 50)
+                    TextField("", text: binding)
+                        .padding()
+                        .frame(width: 190, height: 50)
+                }
             }
         }
     }
