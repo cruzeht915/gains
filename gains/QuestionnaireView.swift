@@ -24,14 +24,14 @@ struct QuestionnaireView: View {
     // An array of questions (or a custom data model if needed)
     let questions: [Question] = [
         Question(text: "1) Gender:", type: .singleChoice, answerChoices: ["Male", "Female", "Other"]),
-        Question(text: "2) What is your primary fitness goal?", type: .singleChoice, answerChoices: ["Build Muscle (Hypertrophy)", "Gain Strength", "Improve Endurance", "Lose Fat / Weight Loss", "General Health & Fitness", "Improve Mobility & Flexibility", "Sport-Specific Training (e.g., running, basketball)"]),
+        Question(text: "2) What is your primary fitness goal?", type: .singleChoice, answerChoices: ["Build Muscle (Hypertrophy)", "Gain Strength", "Improve Endurance", "Lose Fat / Weight Loss", "General Health & Fitness", "Improve Mobility & Flexibility"]),
         Question(text: "3) What secondary fitness goal(s) would you like to include?", type: .multipleChoice, answerChoices: ["Muscle Gain", "Fat Loss", "Strength Building", "Athletic Performance", "Recovery & Mobility", "Improve Cardiovascular Health"]),
         Question(text: "4) How many days per week would you like to work out?", type: .singleChoice, answerChoices: ["1-2 days", "3-4 days", "5+ days"]),
         Question(text: "5) How long should each workout session last?", type: .singleChoice, answerChoices: ["<30 minutes (Quick workouts)", "30-45 minutes (Balanced)", "45-60 minutes (Standard training session)", "60+ minutes (Longer duration workouts)"]),
         Question(text: "6) What type of workouts do you prefer", type: .multipleChoice, answerChoices: ["Weight Training (Barbells, Dumbbells)", "Bodyweight / Calisthenics", "High-Intensity Interval Training (HIIT)", "Cardio (Running, Cycling, etc.)", "Yoga & Mobility (Flexibility focus)", "Functional Training (e.g., CrossFit, kettlebells)"]),
         Question(text: "7) What is your current fitness level", type: .singleChoice, answerChoices: ["Beginner (New to working out)", "Intermediate (Work out occasionally)", "Advanced (Regularly train with structured workouts)"]),
         Question(text: "8) What is yuour experience level with weight training", type: .singleChoice, answerChoices: ["Never lifted before", "Light experience (some gym experience but inconsistent)", "Moderate experience (consistent training for 6+ months)", "Advanced experience (2+ years of structured training)"]),
-        Question(text: "9) How would you describe your strength in key lifts", type: .textInput, answerChoices: ["Bench Press (Enter weight in lbs/kg)", "Squat (Enter weight in lbs/kg)", "Deadlift (Enter weight in lbs/kg)"]),
+        Question(text: "9) How would you describe your strength in key lifts (Optional)", type: .textInput, answerChoices: ["Bench Press (Enter weight in lbs/kg):", "Squat (Enter weight in lbs/kg):", "Deadlift (Enter weight in lbs/kg):"]),
         Question(text: "10) Do you have any muscle inbalances or weaknesses you want to correct", type: .multipleChoice, answerChoices: ["Weak upper body (e.g., chest, arms, shoulders)", "Weak lower body (e.g., legs, glutes)", "Core strength (abs, lower back)", "No specific weaknesses"]),
         Question(text: "11) Where will you be working out", type: .singleChoice, answerChoices: ["Commercial Gym (Access to full equipment)", "Home Gym (Limited equipment)", "Outdoor Workouts (e.g., parks, running trails)", "No Equipment (Bodyweight only)"]),
         Question(text: "12) What equipment do you have access to", type: .multipleChoice, answerChoices: ["Barbells & Plates", "Dumbbells", "Kettlebells", "Resistance Bands", "Machines (Leg press, Lat Pulldown, etc.)", "Pull-Up Bar", "Cardio Machines (Treadmill, Bike, Rowing)"]),
@@ -54,11 +54,11 @@ struct QuestionnaireView: View {
     // We'll store user answers in these states:
     // - singleChoiceAnswers: [UUID: String]  (one selected answer per question ID)
     // - multipleChoiceAnswers: [UUID: Set<String>] (multiple selected answers per question ID)
-    // - textAnswers: [UUID: String]
+    // - textAnswers: [String: String]
     
     @State private var singleChoiceAnswers: [UUID : String] = [:]
     @State private var multipleChoiceAnswers: [UUID : Set<String>] = [:]
-    @State private var textAnswers: [UUID : String] = [:]
+    @State private var textAnswers: [String : String] = [:]
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -84,8 +84,16 @@ struct QuestionnaireView: View {
                     VStack (alignment: .leading, spacing: 20){
                         Text(question.text)
                             .font(.headline)
-                        singleChoiceView(question)
-                    }
+                            .foregroundColor(.white)
+                        switch question.type {
+                        case .singleChoice:
+                            singleChoiceView(question)
+                        case .multipleChoice:
+                            multipleChoiceView(question)
+                        case .textInput:
+                            textInputView(question)
+                        }
+                    }.padding()
                     
                 }
            
@@ -133,21 +141,65 @@ struct QuestionnaireView: View {
                 singleChoiceAnswers[question.id] = choice
             }) {
                 HStack(alignment: .center, spacing: 10) {
-                    Rectangle()
-                        .fill(Color.black)
-                        .frame(width: 24, height: 24)
-                        .overlay(
-                            // Show selected indicator if it matches
-                            Image(systemName: selectedAnswer == choice ? "checkmark" : "")
-                                .foregroundColor(.white)
-                                .font(.system(size: 16, weight: .bold))
-                        )
+                    Image(systemName: choice == selectedAnswer ? "inset.filled.circle" : "circle")
+                                                .foregroundColor(.white)
+                                                .font(.title2)
                     Text(choice)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.white)
                 }
-                .padding(.vertical, 4)
+                .padding(10)
             }
             .buttonStyle(.plain)
+            .frame(maxWidth: .infinity, minHeight: 0, alignment: .leading)
+            .background(Color.black)
+            .cornerRadius(8)
+        }
+    }
+    
+    // Multiple Choice: A user can select or deselect multiple answers
+    @ViewBuilder
+    private func multipleChoiceView(_ question: Question) -> some View {
+        let selectedSet = multipleChoiceAnswers[question.id] ?? []
+        ForEach(question.answerChoices, id: \.self) { choice in
+            Button(action: {
+                toggleMultipleChoiceAnswer(question: question, choice: choice)
+            }) {
+                HStack(alignment: .center, spacing: 10) {
+                    Image(systemName: selectedSet.contains(choice) ? "checkmark.square.fill" : "square")
+                                                .foregroundColor(.white)
+                                                .font(.title2)
+                    
+                    Text(choice)
+                        .foregroundColor(.white)
+                }
+                .padding(10)
+            }
+            .buttonStyle(.plain)
+            .frame(maxWidth: .infinity, minHeight: 0, alignment: .leading)
+            .background(Color.black)
+            .cornerRadius(8)
+        }
+    }
+    
+    @ViewBuilder
+    private func textInputView(_ question: Question) -> some View {
+        ForEach(question.answerChoices, id:\.self) { toInput in
+            Text("\(toInput)")
+                .font(.headline)
+                .foregroundColor(.yellow)
+                .font(.system(size: 16, weight: .bold))
+            let binding = Binding<String>(
+                get: {textAnswers[toInput] ?? ""},
+                set: {textAnswers[toInput] = $0}
+            )
+            ZStack {
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(width: 200, height: 50)
+                TextField("", text: binding)
+                    .padding()
+                    .frame(width: 190, height: 50)
+            }
         }
     }
     
@@ -159,6 +211,7 @@ struct QuestionnaireView: View {
         } else {
             set.insert(choice)
         }
+        multipleChoiceAnswers[question.id] = set
     }
 }
 
