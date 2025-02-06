@@ -11,6 +11,7 @@
 		8A04711B2D2CA0E600D4685C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A04711A2D2CA0E600D4685C /* HomeView.swift */; };
 		8A04711D2D2CA0F400D4685C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A04711C2D2CA0F400D4685C /* Assets.xcassets */; };
 		8A0471202D2CA0F400D4685C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A04711F2D2CA0F400D4685C /* Preview Assets.xcassets */; };
+		BF292F462D54755B00342E7D /* HeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF292F452D54754F00342E7D /* HeatmapView.swift */; };
 		BFBB9D492D4D8D1A00B5DAE0 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB9D482D4D8D0D00B5DAE0 /* AuthView.swift */; };
 		BFBB9D4B2D5065E100B5DAE0 /* QuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB9D4A2D5065D700B5DAE0 /* QuestionnaireView.swift */; };
 		BFBB9D4D2D52B67500B5DAE0 /* MonthCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB9D4C2D52B66900B5DAE0 /* MonthCalendarView.swift */; };
@@ -22,6 +23,7 @@
 		8A04711A2D2CA0E600D4685C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8A04711C2D2CA0F400D4685C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A04711F2D2CA0F400D4685C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BF292F452D54754F00342E7D /* HeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapView.swift; sourceTree = "<group>"; };
 		BFBB9D482D4D8D0D00B5DAE0 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		BFBB9D4A2D5065D700B5DAE0 /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
 		BFBB9D4C2D52B66900B5DAE0 /* MonthCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarView.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				BFBB9D482D4D8D0D00B5DAE0 /* AuthView.swift */,
 				BFBB9D4A2D5065D700B5DAE0 /* QuestionnaireView.swift */,
 				BFBB9D4C2D52B66900B5DAE0 /* MonthCalendarView.swift */,
+				BF292F452D54754F00342E7D /* HeatmapView.swift */,
 				8A04711C2D2CA0F400D4685C /* Assets.xcassets */,
 				8A04711E2D2CA0F400D4685C /* Preview Content */,
 			);
@@ -155,6 +158,7 @@
 				8A0471192D2CA0E600D4685C /* gainsApp.swift in Sources */,
 				BFBB9D4D2D52B67500B5DAE0 /* MonthCalendarView.swift in Sources */,
 				BFBB9D492D4D8D1A00B5DAE0 /* AuthView.swift in Sources */,
+				BF292F462D54755B00342E7D /* HeatmapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

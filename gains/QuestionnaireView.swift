@@ -210,13 +210,15 @@ struct QuestionnaireView: View {
                 ZStack {
                     Rectangle()
                         .fill(Color.white)
-                        .frame(width: 200, height: 50)
+                        .frame(width: 120, height: 40)
+                        .cornerRadius(4)
                     Rectangle()
                         .fill(Color.gray.opacity(0.2))
-                        .frame(width: 200, height: 50)
+                        .frame(width: 120, height: 40)
+                        .cornerRadius(4)
                     TextField("", text: binding)
                         .padding()
-                        .frame(width: 190, height: 50)
+                        .frame(width: 110, height: 40)
                 }
             }
         }

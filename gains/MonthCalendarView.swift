@@ -6,21 +6,38 @@
 //
 
 import SwiftUI
-import JTAppleCalendar
 import UIKit
 
 struct MonthCalendarView: View {
     var body: some View {
-        ZStack {
+        ZStack (alignment: .top) {
             Color("Background2")  // Background color
                 .ignoresSafeArea()
             VStack {
-                Text("Your Month")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .padding(.top, 40)
+                HStack (spacing: 20){
+                    Image("Settings Icon")
+                        .resizable()
+                        .frame(width: 35, height: 35)
+                    Spacer()
+                    HStack(spacing: 5) {
+                        Image("Button (Your Week)")
+                            .resizable()
+                            .frame(width: 95, height: 37)
+                        Image("Button (Run)")
+                            .resizable()
+                            .frame(width: 60, height: 37)
+                        NavigationLink(destination: HeatmapView()){
+                            Image("Button (heatmap)")
+                                .resizable()
+                                .frame(width: 87, height: 39)
+                        }
+                        
+                    }
+                }.padding()
+                Image("Your Month")
+                    .padding(.vertical, 35)
                 
-                MonthView(year:2025, month:1)
+                MonthView(year:2025, month:6)
                     .padding()
                 
                 Text("Split 1")
