@@ -15,7 +15,7 @@ public struct HeatmapView: View {
     
     public var body: some View {
         ZStack(alignment: .top) {
-            Color("Background3")
+            Color.black
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 HStack {

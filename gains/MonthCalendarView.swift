@@ -11,7 +11,7 @@ import UIKit
 struct MonthCalendarView: View {
     var body: some View {
         ZStack (alignment: .top) {
-            Color("Background2")  // Background color
+            Color.background2  // Background color
                 .ignoresSafeArea()
             VStack {
                 HStack (spacing: 20){
@@ -19,13 +19,15 @@ struct MonthCalendarView: View {
                         .resizable()
                         .frame(width: 35, height: 35)
                     Spacer()
-                    HStack(spacing: 5) {
+                    HStack(spacing: 2) {
                         Image("Button (Your Week)")
                             .resizable()
                             .frame(width: 95, height: 37)
-                        Image("Button (Run)")
-                            .resizable()
-                            .frame(width: 60, height: 37)
+                        NavigationLink(destination: RunView()){
+                            Image("Button (Run)")
+                                .resizable()
+                                .frame(width: 60, height: 37)
+                        }
                         NavigationLink(destination: HeatmapView()){
                             Image("Button (heatmap)")
                                 .resizable()
@@ -35,29 +37,20 @@ struct MonthCalendarView: View {
                     }
                 }.padding()
                 Image("Your Month")
-                    .padding(.vertical, 35)
+                    .padding(.vertical, 30)
                 
                 MonthView(year:2025, month:6)
                     .padding()
+                    .padding(.bottom, 25)
                 
-                Text("Split 1")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 40)
-                    .padding(.leading, 20)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("Split 2")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.leading, 20)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("Split 3")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.leading, 20)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                ForEach(1...3, id: \.self) { ind in
+                    Text("Split \(ind)")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding(.leading, 20)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .italic(true)
+                }
                     
             }
         }
@@ -126,23 +119,27 @@ struct MonthView: View {
         VStack (spacing: 1){
             // Month title
             Text("\(monthName(year: year, month: month))")
+                .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .font(.headline)
                 .padding(4)
-                .background(Color.orange)
-                .overlay(Rectangle().stroke(Color.black, lineWidth: 2))
+                .background(Color.background1)
+                .overlay(Rectangle().stroke(Color.black, lineWidth: 1))
+                .italic(true)
             
             // Weekday headers
             HStack (spacing: 1){
                 ForEach(["Sun","M","Tue","W","Thu","F","Sat"], id: \.self) { dayName in
                     Text(dayName)
+                        .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .font(.headline)
                         .padding(.vertical, 2)
-                        .overlay(Rectangle().stroke(Color.black, lineWidth: 2))
+                        .overlay(Rectangle().stroke(Color.black, lineWidth: 1))
+                        .italic(true)
                 }
             }
-            .background(Color.orange)
+            .background(Color.background1)
             
             // The main grid
             LazyVGrid(columns: columns, spacing: 1) {
@@ -184,14 +181,19 @@ struct DayCell: View {
                 .frame(maxWidth: .infinity, minHeight: 50)
         } else {
             VStack {
-                Text(dayNumberString(dayInfo.date))
-                    .foregroundColor(.white)
-                    .fontWeight(.bold)
-                    .padding(0)
+                HStack {
+                    Text(dayNumberString(dayInfo.date))
+                        .foregroundColor(.black)
+                        .fontWeight(.bold)
+                        .padding(0)
+                        .italic(true)
+                    Spacer()
+                }
+                Spacer()
             }
-            .frame(maxWidth: .infinity, minHeight: 50)  // cell size
+            .frame(maxWidth: .infinity, minHeight: 60)  // cell size
             .background(backgroundColor(for: dayInfo.splitType))
-            .overlay(Rectangle().stroke(Color.black, lineWidth: 2))
+            .overlay(Rectangle().stroke(Color.black, lineWidth: 1))
         }
     }
     
@@ -206,7 +208,7 @@ struct DayCell: View {
         case .split1: return Color.green.opacity(0.6)   // e.g. mint/teal
         case .split2: return Color.red
         case .split3: return Color.blue
-        case nil:     return Color.gray
+        case nil:     return Color.white
         }
     }
 }
