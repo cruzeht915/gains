@@ -1,6 +1,7 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from .models import User, Workout, Exercise
 from .schemas import UserCreate, WorkoutCreate, WorkoutResponse
+from datetime import datetime
 
 from passlib.context import CryptContext
 
@@ -19,11 +20,43 @@ def create_user(db: Session, user: UserCreate):
     db.refresh(db_user)
     return db_user
 
-#get User by email
+#Get User by email
 def get_user_by_email(db: Session, email:str):
     return db.query(User).filter(User.email == email).first()
 
-#get User by ID
+#Get User by ID
 def get_user_by_id(db: Session, user_id: int):
     return db.query(User).filter(User.id == user_id).first()
+
+
+#Create user workout
+def create_workout(db: Session, workout: WorkoutCreate):
+    #Creates workout entry
+    new_workout = Workout(
+        user_id = workout.user_id,
+        date = datetime.now()
+    )
+    db.add(new_workout)
+    db.commit()
+    db.refresh(new_workout)
+
+    #Add exercises to Workout
+    for exercise in workout.exercises:
+        new_exercise = Exercise(
+            workout_id = new_workout.id, #Link to Workout
+            name = exercise.name,
+            sets = exercise.sets,
+            reps = exercise.reps,
+            weight = exercise.weight
+        )
+        db.add(new_exercise)
+    return new_workout
+
+#Get a User's workouts
+def get_user_workouts(db: Session, user_id: int):
+    return db.query(Workout).filter(Workout.user_id==user_id).all()
+
+#Get a workout by id
+def get_workout_by_id(db: Session, workout_id: int):
+    return db.query(Workout).options(joinedload(Workout.exercises)).filter(Workout.id==workout_id).first() #Gets around Lazy Loading
 
