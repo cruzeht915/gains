@@ -20,7 +20,7 @@ class Workout(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     date = Column(DateTime, default= datetime.now())
 
-    users = relationship("User", back_populates="workouts")
+    user = relationship("User", back_populates="workouts")
     exercises = relationship("Exercise", back_populates="workout")
 
     

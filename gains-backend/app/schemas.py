@@ -12,7 +12,7 @@ class UserResponse(UserBase):
     id: int
     
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class LoginRequest(BaseModel):
     email: EmailStr
@@ -22,7 +22,7 @@ class ExerciseBase(BaseModel):
     name: str
     sets: int
     reps: List[int]
-    weigths: List[float]
+    weight: List[float]
 
 class WorkoutCreate(BaseModel):
     user_id: int
@@ -33,4 +33,4 @@ class WorkoutResponse(WorkoutCreate):
     date: datetime
     
     class Config:
-        orm_mode = True
+        from_attributes = True
